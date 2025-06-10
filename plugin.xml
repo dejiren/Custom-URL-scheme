@@ -1,41 +1,40 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        id="cordova-plugin-customurlscheme"
-        version="5.0.2">
+        id="cordova-plugin-customurlscheme-universal"
+        version="1.0.0">
 
-  <name>Custom URL scheme</name>
+  <name>Custom URL scheme with Universal Links</name>
 
   <description>
-    Launch your app by using this URL:  mycoolapp://
-    You can add a path and even pass params like this: mycoolerapp://somepath?foo=bar
+    Launch your app using custom URL scheme and Universal Links.
   </description>
 
-  <author>Eddy Verbruggen</author>
+  <author>Eddy Verbruggen（update：osnakamura.sa@wingarc.com）</author>
 
   <license>MIT</license>
 
-  <keywords>Custom URL Scheme, URLscheme, URL scheme, Custom URL, Launch My App, Launch App</keywords>
+  <keywords>Universal Links, Custom URL Scheme, URLscheme, URL scheme, Custom URL, Launch My App, Launch App</keywords>
 
-  <repo>https://github.com/EddyVerbruggen/Custom-URL-scheme.git</repo>
+  <repo>https://github.com/dejiren/Custom-URL-scheme.git</repo>
 
   <issue>https://github.com/EddyVerbruggen/Custom-URL-scheme/issues</issue>
 
   <preference name="URL_SCHEME" />
+  <preference name="UNIVERSAL_LINKS_DOMAIN" default="" />
 
   <engines>
     <engine name="cordova" version=">=3.0.0"/>
   </engines>
 
-  <!-- ios -->
+  <!-- iOS Platform -->
   <platform name="ios">
-    <js-module src="www/ios/LaunchMyApp.js" name="LaunchMyApp">
-      <clobbers target="window.plugins.launchmyapp" />
-    </js-module>
-
+    <!-- Info.plist設定 (既存のCustom URL Scheme) -->
     <config-file target="*-Info.plist" parent="CFBundleURLTypes">
       <array>
         <dict>
+          <key>CFBundleURLName</key>
+          <string>$PACKAGE_NAME</string>
           <key>CFBundleURLSchemes</key>
           <array>
             <string>$URL_SCHEME</string>
@@ -43,6 +42,27 @@
         </dict>
       </array>
     </config-file>
+
+    <!-- Universal Links用のAssociated Domains設定 -->
+    <config-file target="*-Debug.plist" parent="com.apple.developer.associated-domains">
+      <array>
+        <string>applinks:$UNIVERSAL_LINKS_DOMAIN</string>
+      </array>
+    </config-file>
+    <config-file target="*-Release.plist" parent="com.apple.developer.associated-domains">
+      <array>
+        <string>applinks:$UNIVERSAL_LINKS_DOMAIN</string>
+      </array>
+    </config-file>
+
+    <!-- AppDelegate Category Extension for Universal Links -->
+    <header-file src="src/ios/AppDelegate+UniversalLinks.h" />
+    <source-file src="src/ios/AppDelegate+UniversalLinks.m" />
+
+    <!-- iOS用の空のJavaScriptファイル (互換性のため) -->
+    <js-module src="www/ios/LaunchMyApp.js" name="LaunchMyApp">
+      <runs />
+    </js-module>
   </platform>
 
   <!-- android -->
