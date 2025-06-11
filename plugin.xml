@@ -20,8 +20,8 @@
 
   <issue>https://github.com/EddyVerbruggen/Custom-URL-scheme/issues</issue>
 
-  <preference name="URL_SCHEME" required="false"/>
-  <preference name="UNIVERSAL_LINKS_DOMAIN" required="false" />
+  <preference name="URL_SCHEME" />
+  <preference name="UNIVERSAL_LINKS_DOMAIN" default="" />
 
   <engines>
     <engine name="cordova" version=">=3.0.0"/>
