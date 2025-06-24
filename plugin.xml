@@ -83,14 +83,15 @@
 
     <source-file src="src/android/nl/xservices/plugins/LaunchMyApp.java" target-dir="src/nl/xservices/plugins"/>
 
-    <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+    <!-- 設定をコメントアウト（※使用するアプリ側で設定を行うため） -->
+    <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="$URL_SCHEME"/>
       </intent-filter>
-      <intent-filter>
+      <intent-filter android:autoVerify="false">
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
@@ -98,7 +99,7 @@
               android:host="$ANDROID_HOST"
               android:pathPrefix="$ANDROID_PATHPREFIX" />
       </intent-filter>
-    </config-file>
+    </config-file> -->
   </platform>
 
   <!-- windows8 -->
